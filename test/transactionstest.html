@@ -1,39 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Refactored date examples</title>
-
-    <link rel="stylesheet" href="../qunit/qunit-1.23.1.css" />
-    <script src="../qunit/qunit-1.23.1.js"></script>
-    <script src="../js/transactions.js"></script>
-
-    <script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Level Money Transaction Summary Test</title>
+<link rel="stylesheet" href="../qunit/qunit-1.23.1.css" />
+<script src="../qunit/qunit-1.23.1.js"></script>
+<script src="../js/transactions.js"></script>
+<script>
     test("transactionprocessor", function(assert) {
-        
-		
-		var input = JSON.stringify({transactions : [{ "amount": 17081500, "is-pending": false, "aggregation-time": 1412859120000,
-					"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
-					"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" }]});
+					var incomeTransactions = [];
+					var spentTransactions = [];
+					var transactions = [];
+					//10th September Income
+					var incomeTransaction1 = { "amount": 17081500, "is-pending": false, "aggregation-time": 1412859120000,
+						"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+						"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" };
+					var incomeTransaction2 = { "amount": 2, "is-pending": false, "aggregation-time": 1412859120000,
+							"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+							"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" };
+					//11th September Income
+					var incomeTransaction3 = { "amount": 2, "is-pending": false, "aggregation-time": 1412859120000,
+							"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+							"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-11-09T12:52:00.000Z" };
+					
+					//10th October Income
+					
+					
+					var incomeTransaction4 = { "amount": 100, "is-pending": false, "aggregation-time": 1412859120000,
+						"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+						"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-10T12:52:00.000Z" };
+					
+					
+					
+					
+					
+					
+					//10th September Exfpenses
+					var spentTransaction1 = { "amount": -17081500, "is-pending": false, "aggregation-time": 1412859120000,
+							"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+							"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" };
+					var spentTransaction2 = { "amount": -2, "is-pending": false, "aggregation-time": 1412859120000,
+								"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+								"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" };
+					//11th September Expenses
+					var spentTransaction3 = { "amount": -2, "is-pending": false, "aggregation-time": 1412859120000,
+							"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+							"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-11-09T12:52:00.000Z" };
+					
+					
+					
+					
+					//10th September Expenses
+					var spentTransaction4 = { "amount": -50, "is-pending": false, "aggregation-time": 1412859120000,
+							"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
+							"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-10T12:52:00.000Z" };
+					
+					
+					
+					
+					
+					incomeTransactions.push(incomeTransaction1);
+					
+					//Test Case 1 :Income of 17081500 for 10th September 2014
+    				var input = JSON.stringify({transactions : incomeTransactions});
 					var output = processTransaction(input);
 					var expectedOutput =  JSON.stringify({"2014-9":{income:17081500,spent:0}});
-					assert.equal(output,expectedOutput,"Income for 9th October");
+					assert.equal(output,expectedOutput,"Income for 9th September");
 					
-		
-
-//Add Additional Income for same date
-					var input = JSON.stringify({transactions : [{ "amount": 17081500, "is-pending": false, "aggregation-time": 1412859120000,
-					"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
-					"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" },
 					
-					{ "amount": 2, "is-pending": false, "aggregation-time": 1412859120000,
-					"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700001", "raw-merchant": "ZENPAYROLL",
-					"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" }
+					//Test Case 2 : Additional Income of $2 for 10th September 2014
 					
-					]});
+					incomeTransactions.push(incomeTransaction2);
+					var input = JSON.stringify({transactions : incomeTransactions});
 					var output = processTransaction(input);
 					var expectedOutput =  JSON.stringify({"2014-9":{income:17081502,spent:0}});
-					assert.equal(output,expectedOutput,"Additional Income of 2$ for 9th October");
+					assert.equal(output,expectedOutput,"Additional Income of 2$ for 9th September");
+					
+					
+					//Test Case 3 :Expense of 17081500 for 10th September 2014
+					spentTransactions.push(spentTransaction1);
+    				var input = JSON.stringify({transactions : spentTransactions});
+					var output = processTransaction(input);
+					var expectedOutput =  JSON.stringify({"2014-9":{income:0,spent:17081500}});
+					assert.equal(output,expectedOutput,"Expense of 17081500 for 9th September 2014");
+					
+					
+					//Test Case 4 : Add Additional Expenses of 2$ for 10th September 2014
+					spentTransactions.push(spentTransaction2);
+					var input = JSON.stringify({transactions : spentTransactions});
+					var output = processTransaction(input);
+					var expectedOutput =  JSON.stringify({"2014-9":{income:0,spent:17081502}});
+					assert.equal(output,expectedOutput,"Additional Expenses of 2$ for 9th September");
+					
+					
+					
+					//Test Case 5 : Income and Expenses for 10th September 2014
+					
+					transactions.push(incomeTransaction1);
+					transactions.push(incomeTransaction2);
+					transactions.push(spentTransaction1);
+					transactions.push(spentTransaction2);
+					var input = JSON.stringify({transactions : transactions});
+					var output = processTransaction(input);
+					var expectedOutput =  JSON.stringify({"2014-9":{income:17081502,spent:17081502}});
+					assert.equal(output,expectedOutput,"Both Income and Expenses for 9th September 2014");
+					
+					//Test Case 6 :Income and Expenses for the complete September Month(including 10th September and 11th September 2014)
+					
+					transactions.push(incomeTransaction3);
+					transactions.push(spentTransaction3);
+					var input = JSON.stringify({transactions : transactions});
+					var output = processTransaction(input);
+					var expectedOutput =  JSON.stringify({"2014-9":{income:17081504,spent:17081504}});
+					assert.equal(output,expectedOutput,"Income and Expenses for the complete September Month(including 10th September and 11th September 2014)");
+					
+					
+					
+					
+					
+					//Test Case 7 :Income and Expenses for the complete September & October Month
+					
+					transactions.push(incomeTransaction4);
+					transactions.push(spentTransaction4);
+					var input = JSON.stringify({transactions : transactions});
+					var output = processTransaction(input);
+					var expectedOutput =  JSON.stringify({"2014-9":{income:17081504,spent:17081504},"2014-10":{income:100,spent:50}});
+					assert.equal(output,expectedOutput,"Income and Expenses for the complete September & October Month");
+					/* 					
+					
+
+					
+					
 
 		
 					
@@ -62,7 +159,7 @@
 					]});
 					var output = processTransaction(input);
 					var expectedOutput =  JSON.stringify({"2014-9":{income:0,spent:17081502}});
-					assert.equal(output,expectedOutput,"Additional Income of 2$ for 9th October");
+					assert.equal(output,expectedOutput,"Additional Income of 2$ for 9th October"); */
 					
 					
 					//{9-9:{amount:17081500,spent:0}
@@ -82,6 +179,6 @@
     </script>
 </head>
 <body>
-    <div id="qunit"></div>
+	<div id="qunit"></div>
 </body>
 </html>
