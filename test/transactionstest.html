@@ -4,9 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Refactored date examples</title>
 
-    <link rel="stylesheet" href="qunit-1.23.1.css" />
-    <script src="qunit-1.23.1.js"></script>
-    <script src="transactions.js"></script>
+    <link rel="stylesheet" href="../qunit/qunit-1.23.1.css" />
+    <script src="../qunit/qunit-1.23.1.js"></script>
+    <script src="../js/transactions.js"></script>
 
     <script>
     test("transactionprocessor", function(assert) {
@@ -50,7 +50,7 @@
 					
 		
 
-//Add Additional Income for same date
+					//Add Additional Income for same date
 					var input = JSON.stringify({transactions : [{ "amount": -17081500, "is-pending": false, "aggregation-time": 1412859120000,
 					"account-id": "nonce:comfy-checking/hdhehe", "clear-date": 1412909700000, "transaction-id": "1412909700000", "raw-merchant": "ZENPAYROLL",
 					"categorization": "Unknown", "merchant": "Zenpayroll", "transaction-time": "2014-10-09T12:52:00.000Z" },
