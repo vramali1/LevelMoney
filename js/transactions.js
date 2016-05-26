@@ -3,13 +3,13 @@ function processTransaction(responseObj) {
 	var transactions = parsed.transactions;
 	var transactionOutput = {};
 	var transactionTime;
-	if (transactions) {
+	if (transactions.length > 0) {
 		for (i = 0; i < transactions.length; i++) {
 			var transactionTime = transactions[i]['transaction-time'];
-			if (transactionTime) {
+			//if (transactionTime) {
 				transactionTime = new Date(transactionTime);
 				var transactionDate = transactionTime.getFullYear().toString()
-						+ "-" + transactionTime.getDate().toString();
+						+ "-" + (transactionTime.getMonth() + 1).toString();
 				if (!transactionOutput.hasOwnProperty(transactionDate)) {
 					transactionOutput[transactionDate] = {};
 					transactionOutput[transactionDate].income = 0;
@@ -22,51 +22,46 @@ function processTransaction(responseObj) {
 					transactionOutput[transactionDate].spent = transactionOutput[transactionDate].spent
 							- transactions[i].amount;
 				}
-			}
+			//}
 		}
+		var averageOutput = processAverage(transactionOutput);
+		return JSON.stringify(averageOutput);
 	}
-	var averageOutput = processAverage(transactionOutput);
-	return JSON.stringify(transactionOutput);
+	return null;
 };
 function processAverage(transactionOutput){
-	var totalMonths = transactionOutput.length;
+	var totalMonths = 0;
 	var totalIncome = 0;
 	var totalSpent = 0;
-	
-	
-	for(i = 0; i < totalMonths;i++){
-		
+	var IncomeAverage;
+	var spentAverage;
+	//debugger;
+	for(var i in transactionOutput){
 		totalIncome  = totalIncome +  transactionOutput[i]['income'];
-		totalSpent  = totalIncome +  transactionOutput[i]['spent'];
-		transactionOutput[i]['income'] = "$" + transactionOutput[i]['income'];
-		transactionOutput[i]['spent'] = "$" + transactionOutput[i]['spent'];
-		
+		totalSpent  = totalSpent +  transactionOutput[i]['spent'];
+		totalMonths = totalMonths + 1;
+		transactionOutput[i]['income'] = "$" + (transactionOutput[i]['income']).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+		transactionOutput[i]['spent'] = "$" + transactionOutput[i]['spent'].toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
 	}
-	var IncomeAverage = totalIncome/totalMonths;
-	var spentAverage = totalSpent/totalMonths;
-	console.log(transactionOutput);
-	
-	/*
-	{"2014-10": {"spent": "$200.00", "income": "$500.00"},
-	"2014-11": {"spent": "$1510.05", "income": "$1000.00"},
-...
-	"2015-04": {"spent": "$300.00", "income": "$500.00"},
-	"average": {"spent": "$750.00", "income": "$950.00"}}*/
-	
-	
-	
-	
+	if(totalIncome == 0){
+		IncomeAverage =  "$" + totalIncome.toFixed(2);
+	} else {
+		IncomeAverage =  "$" + (totalIncome/totalMonths).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+	}
+	if(totalSpent == 0){
+		spentAverage =  "$" + totalSpent.toFixed(2);
+	} else {
+		spentAverage = "$" + (totalSpent/totalMonths).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+	}
+	transactionOutput.average = {spent: spentAverage , income: IncomeAverage};
+	return transactionOutput;
 }
-
-
-
 function displayTransactionSummary(responseObj) {
 
 	var transactionOutput = processTransaction(responseObj);
 	var pretty = JSON.stringify(transactionOutput, null, 2);
 	document.getElementById('menuPanel').textContent = pretty;
 }
-
 function onReady() {
 	debugger;
 	var me = this;
@@ -78,7 +73,7 @@ function onReady() {
 	xhr.setRequestHeader('Accept', 'application/json');
 	debugger;
 	xhr.onloadend = function(response) {
-		processTransaction(this.response);
+		displayTransactionSummary(this.response);
 	};
 	xhr.onerror = function(err) {
 		document.getElementById('menuPanel').textContent = "ugh an error. i can't handle this right now.";
