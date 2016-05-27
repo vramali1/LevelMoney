@@ -3,15 +3,42 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script type="text/javascript" src="js/transactions.js"></script>
 <script type="text/javascript" src="jquery/jquery-2.2.4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/table.css">
 <title id="page-title">Level Money Transaction Summary</title>
 <script type="text/javascript">
-$(onReady);
-//Ext.onReady(onReady);
+	$(onReady);
 </script>
 </head>
 <body>
-<input type="button" id="clickme" value="Show Results">
-<div id="results"></div>
-<div id="menuPanel"></div>
+	<div id="transactionSummary"></div>
+	<table id="DataTable">
+	</table>
+	<div id="averageIncome"></div>
+	<br>
+	<div id="averageExpense"></div>
+	<div id="transactionSummaryJSON"></div>
+	
+	
+	
+	<div id="ignoreDonut"></div>
+	<table id="ignoreDonutTable">
+	</table>
+	<div id="averageIgnoreDonutIncome"></div>
+	<br>
+	<div id="averageIgnoreDonutExpense"></div>
+	<div id="ignoreDonutSummaryJSON"></div>
+	
+	
+	
+	<!-- 
+	<div id="ignoreDonut"></div>
+	<table id="DataTable">
+	</table>
+	<font>Average Income: </font>
+	<div id="averageIgnoreDonutIncome"></div>
+	<br>
+	<font>Average Expense: </font>
+	<div id="averageIgnoreDonutExpense"></div>
+	<div id="ignoreDonutJSON"></div>  -->
 </body>
 </html>
