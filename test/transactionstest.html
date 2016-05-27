@@ -53,7 +53,7 @@
 		//Test Case 1 :Income of 17081500 for 10th October 2014 & Monthly Average Income and Expense
 		incomeTransactions.push(incomeTransaction1);
  		var input = JSON.stringify({transactions : incomeTransactions});
-		var output = processTransaction(input);
+		var output = JSON.stringify(processTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$1,708.15",spent:"$0.00"},average: {spent: "$0.00", income: "$1,708.15"}});
 		assert.equal(output,expectedOutput,"Income for 9th October 2014");
 		
@@ -61,21 +61,21 @@
 		
 		incomeTransactions.push(incomeTransaction2);
 		var input = JSON.stringify({transactions : incomeTransactions});
-		var output = processTransaction(input);
+		var output = JSON.stringify(processTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$1,710.15",spent:"$0.00"},average: {spent: "$0.00", income: "$1,710.15"}});
 		assert.equal(output,expectedOutput,"Additional Income of 2$ for 9th October 2014");
 	
 		//Test Case 3 :Expense of 17081500 for 10th October 2014 & Monthly Average Income and Expense
 		spentTransactions.push(spentTransaction1);
  		var input = JSON.stringify({transactions : spentTransactions});
-		var output = processTransaction(input);
+		var output = JSON.stringify(processTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$0.00",spent:"$17,081,500.00"},average: {spent: "$17,081,500.00", income: "$0.00"}});
 		assert.equal(output,expectedOutput,"Expense of $17,081,500 for 9th October 2014");
 		
 		//Test Case 4 : Add Additional Expenses of 2$ for 10th October 2014 & Monthly Average Income and Expense
 		spentTransactions.push(spentTransaction2);
 		var input = JSON.stringify({transactions : spentTransactions});
-		var output = processTransaction(input);
+		var output = JSON.stringify(processTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$0.00",spent:"$17,081,502.00"},average: {spent: "$17,081,502.00", income: "$0.00"}});
 		assert.equal(output,expectedOutput,"Additional Expenses of 2$ for 9th October");
 		
@@ -85,7 +85,7 @@
 		transactions.push(spentTransaction1);
 		transactions.push(spentTransaction2);
 		var input = JSON.stringify({transactions : transactions});
-		var output = processTransaction(input);
+		var output = JSON.stringify(processTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$1,710.15",spent:"$17,081,502.00"},average: {spent: "$17,081,502.00", income: "$1,710.15"}});
 		assert.equal(output,expectedOutput,"Both Income and Expenses for 9th October 2014");
 		
@@ -93,7 +93,7 @@
 		transactions.push(incomeTransaction3);
 		transactions.push(spentTransaction3);
 		var input = JSON.stringify({transactions : transactions});
-		var output = processTransaction(input);
+		var output = JSON.stringify(processTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$1,712.15",spent:"$17,081,504.00"},average: {spent: "$17,081,504.00", income: "$1,712.15"}});
 		assert.equal(output,expectedOutput,"Income and Expenses for the complete October Month(including 10th October and 11th October 2014)");
 		
@@ -101,12 +101,12 @@
 		transactions.push(incomeTransaction4);
 		transactions.push(spentTransaction4);
 		var input = JSON.stringify({transactions : transactions});
-		var output = processTransaction(input);
+		var output = JSON.stringify(processTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$1,712.15",spent:"$17,081,504.00"},"2014-11":{income:"$100.00",spent:"$50.00"},average: {spent: "$8,540,777.00", income: "$906.08"}});
 		assert.equal(output,expectedOutput,"Income and Expenses for the complete October & November Month");
 		
 		//Test Case 8 :Ignore Donut Transaction : Income and Expenses for the complete October & November 2014 & Monthly Average Income and Expense
-		var output = ignoreDonutTransaction(input);
+		var output = JSON.stringify(ignoreDonutTransaction(input));
 		assert.equal(output,expectedOutput,"Ignore Donut Transaction Test:Transaction with No Donuts, Income and Expenses for the complete October & November Month");
 		
 		//Test Case 9 :Ignore Donut Transaction : Income and Expenses for the complete October & November 2014 & Monthly Average Income and Expense
@@ -114,7 +114,7 @@
 		transactions.push(krispyKremeTransaction);
 		transactions.push(dunkinTransaction);
 		var input = JSON.stringify({transactions : transactions});
-		var output = ignoreDonutTransaction(input);
+		var output = JSON.stringify(ignoreDonutTransaction(input));
 		var expectedOutput =  JSON.stringify({"2014-10":{income:"$0.00",spent:"$0.00"},average: {spent: "$0.00", income: "$0.00"}});
 		assert.equal(output,expectedOutput,"Ignore Donut Transaction Test:Transaction with Donuts, Income and Expenses for the complete October & November Month");
     });
