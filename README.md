@@ -1,5 +1,5 @@
-# LevelMoney
-Level Money Transaction Summary
+# LevelMoney Transaction Summary
+
 This Project is used to display Monthly transactions of a user from Level Money REST Endpoint URL
 
 https://prod-api.level-labs.com/api/v2/core/get-all-transactions
